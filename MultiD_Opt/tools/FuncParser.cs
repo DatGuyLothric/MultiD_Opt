@@ -29,6 +29,7 @@ namespace MultiD_Opt.tools
         {
             Tokenize(Input);
             bool Result = Poliz();
+            // TODO: Check on calc
 
             return Result;
         }
@@ -72,41 +73,80 @@ namespace MultiD_Opt.tools
                         while (Temp != "(")
                         {
                             Pol_Not.Push(Temp);
+                            if (Stack.Count == 0)
+                            {
+                                return false;
+                            }
                             Temp = Stack.Pop();
                         }
                         break;
                     case "+":
-                        while (Stack.Peek() == "+" || Stack.Peek() == "-" || Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                        if (Stack.Count != 0)
                         {
-                            Pol_Not.Push(Stack.Pop());
+                            while (Stack.Peek() == "+" || Stack.Peek() == "-" || Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                            {
+                                Pol_Not.Push(Stack.Pop());
+                                if (Stack.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
                         }
                         Stack.Push("+");
                         break;
                     case "*":
-                        while (Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                        if (Stack.Count != 0)
                         {
-                            Pol_Not.Push(Stack.Pop());
+                            while (Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                            {
+                                Pol_Not.Push(Stack.Pop());
+                                if (Stack.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
                         }
                         Stack.Push("*");
                         break;
                     case "-":
-                        while (Stack.Peek() == "+" || Stack.Peek() == "-" || Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                        if (Stack.Count != 0)
                         {
-                            Pol_Not.Push(Stack.Pop());
+                            while (Stack.Peek() == "+" || Stack.Peek() == "-" || Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                            {
+                                Pol_Not.Push(Stack.Pop());
+                                if (Stack.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
                         }
                         Stack.Push("-");
                         break;
                     case "/":
-                        while (Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                        if (Stack.Count != 0)
                         {
-                            Pol_Not.Push(Stack.Pop());
+                            while (Stack.Peek() == "/" || Stack.Peek() == "*" || Stack.Peek() == "^")
+                            {
+                                Pol_Not.Push(Stack.Pop());
+                                if (Stack.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
                         }
                         Stack.Push("/");
                         break;
                     case "^":
-                        while (Stack.Peek() == "^")
+                        if (Stack.Count != 0)
                         {
-                            Pol_Not.Push(Stack.Pop());
+                            while (Stack.Peek() == "^")
+                            {
+                                Pol_Not.Push(Stack.Pop());
+                                if (Stack.Count == 0)
+                                {
+                                    break;
+                                }
+                            }
                         }
                         Stack.Push("^");
                         break;

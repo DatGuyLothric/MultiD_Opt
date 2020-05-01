@@ -27,8 +27,9 @@ namespace MultiD_Opt.methods
         private void Select()
         {
             int selected = 0;
+            bool Running = true;
 
-            while (true)
+            while (Running)
             {
                 Console.WriteLine("Выберете необходимую опцию:\n");
                 for (int i = 0; i < Options.Count; i++)
@@ -44,17 +45,25 @@ namespace MultiD_Opt.methods
                 while (pressed != ConsoleKey.DownArrow && pressed != ConsoleKey.UpArrow && pressed != ConsoleKey.Enter) { pressed = Console.ReadKey().Key; }
 
                 Console.Clear();
-                if (pressed == ConsoleKey.DownArrow)
+                switch (pressed)
                 {
-                    selected = selected != 1 ? selected + 1 : 0;
-                }
-                else if (pressed == ConsoleKey.UpArrow)
-                {
-                    selected = selected != 0 ? selected - 1 : 1;
-                }
-                else if (pressed == ConsoleKey.Enter)
-                {
-                    // Run instance
+                    case ConsoleKey.DownArrow:
+                        selected = selected != 1 ? selected + 1 : 0;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        selected = selected != 0 ? selected - 1 : 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        switch (selected) {
+                            case 0:
+                                Simplex Simplex_Inst = new Simplex();
+                                Simplex_Inst.Start();
+                                break;
+                            case 1:
+                                Running = false;
+                                break;
+                        }
+                        break;
                 }
             }
         }
