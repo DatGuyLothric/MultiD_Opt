@@ -1,0 +1,7 @@
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\bin\Debug\MultiD_Opt.exe.config
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\bin\Debug\MultiD_Opt.exe
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\bin\Debug\MultiD_Opt.pdb
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\obj\Debug\MultiD_Opt.csprojAssemblyReference.cache
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\obj\Debug\MultiD_Opt.csproj.CoreCompileInputs.cache
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\obj\Debug\MultiD_Opt.exe
+C:\Users\Denis\Documents\github\MultiD_Opt\MultiD_Opt\obj\Debug\MultiD_Opt.pdb
