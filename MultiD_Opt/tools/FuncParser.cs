@@ -22,13 +22,23 @@ namespace MultiD_Opt.tools
     class FuncParser
     {
 
-        public string Function;
-        private List<string> Tokens = new List<string>();
-        private Stack<string> Stack = new Stack<string>();
-        private Stack<string> Pol_Not = new Stack<string>();
+        private string Function;
+        private List<string> Tokens;
+        private Stack<string> Stack;
+        private Stack<string> Pol_Not;
+        private List<string> Variables;
+
+        private void Init()
+        {
+            Tokens = new List<string>();
+            Stack = new Stack<string>();
+            Pol_Not = new Stack<string>();
+            Variables = new List<string>();
+        }
 
         public bool Read(string Input)
         {
+            Init();
             Function = Input;
             Tokenize(Input);
             bool Result = Poliz();
@@ -173,9 +183,9 @@ namespace MultiD_Opt.tools
 
         public double Calculate(bool Check = false)
         {
-            Dictionary<string, double> Unknowns = new Dictionary<string, double>();
             Stack<string> Temp_Stack = new Stack<string>(Pol_Not);
             Stack<double> Calc_Stack = new Stack<double>();
+            Dictionary<string, double> Unknowns = new Dictionary<string, double>();
             int Temp_Cycle_Count = Temp_Stack.Count;
 
             for (int i = 0; i < Temp_Cycle_Count; i++)
@@ -252,28 +262,20 @@ namespace MultiD_Opt.tools
                             if (Check)
                             {
                                 Temp_Conv = 0;
+                                if (!Variables.Contains(Temp_Var))
+                                {
+                                    Variables.Add(Temp_Var);
+                                }
                             }
                             else
                             {
-                                if (Unknowns.Count == 0)
+                                if (Unknowns.Keys.Contains(Temp_Var))
                                 {
-                                    Unknowns.Add(Temp_Var, Unknown_Input(Temp_Var));
+                                    Unknowns.TryGetValue(Temp_Var, out Temp_Conv);
                                 }
                                 else
                                 {
-                                    for (int j = 0; j < Unknowns.Count + 1; j++)
-                                    {
-                                        if (Unknowns.Keys.Contains(Temp_Var))
-                                        {
-                                            Unknowns.TryGetValue(Temp_Var, out Temp_Conv);
-                                            break;
-                                        }
-                                        if (j == Unknowns.Count)
-                                        {
-                                            Temp_Conv = Unknown_Input(Temp_Var);
-                                            Unknowns.Add(Temp_Var, Temp_Conv);
-                                        }
-                                    }
+                                    Unknowns.Add(Temp_Var, Temp_Conv = Unknown_Input(Temp_Var));
                                 }
                             }
                         }
@@ -287,7 +289,7 @@ namespace MultiD_Opt.tools
                 return 47.47474747;
             }
 
-            return 0;
+            return Calc_Stack.Pop();
         }
 
         private double Unknown_Input(string Temp_Var)
@@ -307,6 +309,11 @@ namespace MultiD_Opt.tools
                 }
             }
             return Temp_Input;
+        }
+
+        public List<string> Get_Variables()
+        {
+            return Variables;
         }
 
     }

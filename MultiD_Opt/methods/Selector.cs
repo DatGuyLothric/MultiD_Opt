@@ -16,7 +16,7 @@ namespace MultiD_Opt.methods
             EXIT = 1,
         }
 
-        private Dictionary<EOptions, string> Options = new Dictionary<EOptions, string>();
+        private Dictionary<EOptions, string> Options;
 
         public void Start()
         {
@@ -70,6 +70,7 @@ namespace MultiD_Opt.methods
 
         private void Init()
         {
+            Options = new Dictionary<EOptions, string>();
             SetOptions();
         }
 
