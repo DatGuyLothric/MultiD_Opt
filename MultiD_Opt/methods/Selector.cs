@@ -27,17 +27,17 @@ namespace MultiD_Opt.methods
         private void Select()
         {
             int selected = 0;
-            bool Running = true;
+            bool running = true;
 
-            while (Running)
+            while (running)
             {
                 Console.WriteLine("Выберете необходимую опцию:\n");
                 for (int i = 0; i < Options.Count; i++)
                 {
-                    string Opt_Out = selected == i ? "> " : "";
-                    string Val_Out = "";
-                    Options.TryGetValue((EOptions)Enum.GetValues(typeof(EOptions)).GetValue(i), out Val_Out);
-                    Console.WriteLine(Opt_Out + Val_Out);
+                    string optOut = selected == i ? "> " : "";
+                    string valOut = "";
+                    Options.TryGetValue((EOptions)Enum.GetValues(typeof(EOptions)).GetValue(i), out valOut);
+                    Console.WriteLine(optOut + valOut);
                 }
                 
                 ConsoleKey pressed = Console.ReadKey().Key;
@@ -56,11 +56,11 @@ namespace MultiD_Opt.methods
                     case ConsoleKey.Enter:
                         switch (selected) {
                             case 0:
-                                Simplex Simplex_Inst = new Simplex();
-                                Simplex_Inst.Start();
+                                Simplex simplexInst = new Simplex();
+                                simplexInst.Start();
                                 break;
                             case 1:
-                                Running = false;
+                                running = false;
                                 break;
                         }
                         break;

@@ -15,20 +15,24 @@ namespace MultiD_Opt.methods
 
         private string Function;
         private double Accuracy;
-        private int Simplex_D;
-        private double Simplex_Length;
-        private Dictionary<string, double> Simplex_Start_Coords;
+        private int SimplexD;
+        private double SimplexLength;
+        private Dictionary<string, double> SimplexStartCoords;
         private FuncParser Parser;
 
         public void Start()
         {
             Init();
             ReadUserData();
+
+
+            // TODO: Move to end func
+            Console.Clear();
         }
 
         private void Init()
         {
-            Simplex_Start_Coords = new Dictionary<string, double>();
+            SimplexStartCoords = new Dictionary<string, double>();
             Parser = new FuncParser();
         }
 
@@ -50,51 +54,34 @@ namespace MultiD_Opt.methods
                     break;
                 }
             }
-            List<string> Temp_Variables = new List<string>(Parser.Get_Variables());
-            Simplex_D = Temp_Variables.Count;
-            Console.WriteLine("Размерность n = " + Simplex_D);
-            Console.Write("Введите точность e: ");
+            List<string> tempVariables = new List<string>(Parser.GetVariables());
+            SimplexD = tempVariables.Count;
+            Console.WriteLine("Размерность n = " + SimplexD);
+            Accuracy = ReadDoubleValue("e", "точность e");
+            for (int i = 0; i < SimplexD; i++)
+            {
+                SimplexStartCoords.Add(tempVariables[i], ReadDoubleValue(tempVariables[i], "координату " + tempVariables[i] + " начальной точки симплекса"));
+            }
+            SimplexLength = ReadDoubleValue("m", "длину ребра симплекса m");
+        }
+
+        private double ReadDoubleValue(string name, string text)
+        {
+            double value;
+            Console.Write("Введите " + text + ": ");
             while (true)
             {
                 try
                 {
-                    Accuracy = Convert.ToDouble(Console.ReadLine());
+                    value = Convert.ToDouble(Console.ReadLine());
                     break;
                 }
                 catch (Exception e)
                 {
-                    Console.Write("Ввод содержит ошибки, попробуйте ввести значение e снова: ");
+                    Console.Write("Ввод содержит ошибки, попробуйте ввести значение " + name + " снова: ");
                 }
             }
-            for (int i = 0; i < Simplex_D; i++)
-            {
-                Console.Write("Введите координату " + Temp_Variables[i] + " начальной точки симплекса: ");
-                while (true)
-                {
-                    try
-                    {
-                        Simplex_Start_Coords.Add(Temp_Variables[i], Convert.ToDouble(Console.ReadLine()));
-                        break;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Write("Ввод содержит ошибки, попробуйте ввести значение " + Temp_Variables[i]  + " снова: ");
-                    }
-                }
-            }
-            Console.Write("Введите длину ребра симплекса m: ");
-            while (true)
-            {
-                try
-                {
-                    Simplex_Length = Convert.ToDouble(Console.ReadLine());
-                    break;
-                }
-                catch (Exception e)
-                {
-                    Console.Write("Ввод содержит ошибки, попробуйте ввести значение m снова: ");
-                }
-            }
+            return value;
         }
 
     }

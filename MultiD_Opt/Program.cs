@@ -20,8 +20,8 @@ namespace MultiD_Opt
 
         static void Main(string[] args)
         {
-            Selector start = new Selector();
-            start.Start();
+            Selector selector = new Selector();
+            selector.Start();
         }
 
     }
